@@ -1,15 +1,17 @@
 import React, { Component } from 'react'
 import ajax from 'superagent'
+import { NavLink } from 'react-router-dom'
 
 class DetailComponent extends Component {
 
-  constructor() {
+  constructor({ match }) {
     super()
     this.state = {
       mode: 'commits',
       commits: [],
       forks: [],
       pulls: [],
+      repo: match.params.repo,
     }
     this.selectMode = this.selectMode.bind(this)
   }
@@ -27,7 +29,8 @@ class DetailComponent extends Component {
   }
 
   fetchFeed(type) {
-    ajax.get(`https://api.github.com/repos/facebook/react/${ type }`)
+    const BaseURL = 'https://api.github.com/repos/facebook'
+    ajax.get(`${ BaseURL }/${ this.state.repo }/${ type }`)
     .end((error, response) => {
       if (!error && response) {
         this.setState({
@@ -44,7 +47,7 @@ class DetailComponent extends Component {
       const author = commit.commit.author ? commit.commit.author.name : 'Anonymous'
       return (
         <p key={ index }>
-          <strong>{ author }</strong>
+          <NavLink to={ `/${ this.state.repo }/${ commit.author.login }` }><strong>{ author } : </strong><br /></NavLink>
           <a href={ commit.html_url }>{ commit.commit.message }</a>
         </p>
       )
@@ -56,6 +59,7 @@ class DetailComponent extends Component {
       const user = pull.user ? pull.user.login : 'Anonymous'
       return (
         <p key={ index }>
+          <NavLink to={ `/${ this.state.repo }/${ user }` }><strong>{ user } : </strong><br /></NavLink>
           <strong>{ user }</strong>
           <a href={ pull.html_url }>{ pull.body }</a>
         </p>
@@ -68,6 +72,7 @@ class DetailComponent extends Component {
       const owner = fork.owner ? fork.owner.login : 'Anonymous'
       return (
         <p key={ index }>
+          <NavLink to={ `/${ this.state.repo }/${ owner }` }><strong>{ owner } : </strong><br /></NavLink>
           <strong>{ owner }</strong>
           <a href={ fork.html_url }>{ fork.message }</a> at { fork.created_at }.
         </p>

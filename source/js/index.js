@@ -1,6 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-// import App from './app'
-import DetailComponent from './pages/detail'
+import { BrowserRouter } from 'react-router-dom'
 
-ReactDOM.render(<DetailComponent />, document.getElementById('root'))
+import Routes from './routes'
+
+
+ReactDOM.render(
+  <BrowserRouter>
+    { Routes }
+  </BrowserRouter>,
+  document.getElementById('root')
+)
