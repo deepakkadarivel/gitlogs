@@ -60,7 +60,6 @@ class DetailComponent extends Component {
       return (
         <p key={ index }>
           <NavLink to={ `/${ this.state.repo }/${ user }` }><strong>{ user } : </strong><br /></NavLink>
-          <strong>{ user }</strong>
           <a href={ pull.html_url }>{ pull.body }</a>
         </p>
       )
@@ -73,7 +72,6 @@ class DetailComponent extends Component {
       return (
         <p key={ index }>
           <NavLink to={ `/${ this.state.repo }/${ owner }` }><strong>{ owner } : </strong><br /></NavLink>
-          <strong>{ owner }</strong>
           <a href={ fork.html_url }>{ fork.message }</a> at { fork.created_at }.
         </p>
       )
